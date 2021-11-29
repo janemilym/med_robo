@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Robot Cam</title>
+    <title>Medical Robotics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
@@ -14,15 +14,24 @@
 </style>
 
 <body>
-    <!-- <img src="http://{{ server_ip }}:8081/"
-        style="width:100%; max-width: 600px; max-height:600px; border-radius:10px"></img>
-    -->
     <h1>Hello, world!</h1>
-    <form action="/" method="POST">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="file"><br />
+        <br /><input type="submit">
+    </form>
+    <br />
+    <form action="/calculate" method="POST">
         <text>X:</text><br /><input name="input_x"><br />
         <text>Y:</text><br /><input name="input_y"><br />
         <text>Z:</text><br /><input name="input_z"><br />
         <text>Segment Length:</text><br /><input name="input_l"><br />
+
+        <br /><input type="submit">
+    </form>
+    <br />
+    <form action="/move" method="POST">
+        <text>Joint:</text><br /><input name="joint"><br />
+        <text>Angle:</text><br /><input name="angle"><br />
 
         <br /><input type="submit">
     </form>
