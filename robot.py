@@ -1,4 +1,5 @@
 import serial
+import time
 
 class Robot:
     def __init__(self, _port="COM11", _baudrate=115200, _timeout=0.1):
@@ -13,7 +14,14 @@ class Robot:
         print(cmd)
         self.robot.write(cmd.encode())
 
+        time.sleep(2)
+
     def resetJoint(self, joint: int):
         cmd = '#' + str(joint) + "RESET" + '\r'
         print(cmd)
         self.robot.write(cmd.encode())
+        time.sleep(1)
+
+    def exit(self):
+        self.robot.close()
+        print('port closed')

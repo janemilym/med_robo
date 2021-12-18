@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, make_respo
 from werkzeug.utils import secure_filename
 import socket
 import serial
+import os
 
 from solution import robotAngles
 from robot import Robot
@@ -11,8 +12,6 @@ s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect(("127.0.0.1", 80))
 server_ip = s.getsockname()[0]
 s.close()
-
-r = Robot()
 
 app = Flask(__name__)
 
@@ -55,12 +54,31 @@ def move():
         print(joint)
         print(angle)
 
+        r = Robot()
         r.move(joint - 1,angle)
+        r.close()
 
         response = make_response(redirect(url_for('index')))
         return(response)
     except ValueError:
         print('bad input')
+
+@app.route('/script', methods=['GET','POST'])
+def script():
+    code = request.form.get("code")
+
+    f = open("script.py", "w")
+    f.write(code)
+    f.close()
+
+    return render_template('index.html')
+
+@app.route('/run', methods=['POST'])
+def run():
+    os.system('py .\script.py')
+
+    response = make_response(redirect(url_for('index')))
+    return(response)
 
 if __name__ == '__main__':
     app.run(debug=True)

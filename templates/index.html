@@ -35,6 +35,40 @@
 
         <br /><input type="submit">
     </form>
+    <br />
+
+    <form id="script" method="POST">
+        <text>Code here:</text><br />
+        <textarea id="code" rows="20" cols="100"></textarea><br />
+        <br /><input type="submit">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).on('submit','#script',function(e) {
+            console.log('hello');
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/script',
+                data:{
+                    code:$("#code").val()
+                },
+                success:function()
+                {
+                    alert('saved');
+                }
+            })
+        });
+    </script>
+
+    <form action="/run" method="POST">
+        <button name="run" type="submit">Run</button>
+    </form>
+
 </body>
 
 </html>
