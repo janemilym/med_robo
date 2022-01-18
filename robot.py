@@ -14,8 +14,6 @@ class Robot:
         print(cmd)
         self.robot.write(cmd.encode())
 
-        time.sleep(2)
-
     def resetJoint(self, joint: int):
         cmd = '#' + str(joint) + "RESET" + '\r'
         print(cmd)

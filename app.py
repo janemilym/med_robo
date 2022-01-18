@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, make_response
-from werkzeug.utils import secure_filename
 import socket
 import serial
 import os
 
-from solution import robotAngles
+#from solution import robotAngles
 from robot import Robot
 
 # Get server ip
@@ -19,17 +18,28 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    f = request.files['file']
-    f.save(secure_filename(f.filename))
-    print('file uploaded successfully')
+@app.route('/uploadSolution', methods=['POST'])
+def uploadSolution():
+    f = request.files['solution']
+    f.save("solution.py")
+    print('solution uploaded successfully')
+
+    response = make_response(redirect(url_for('index')))
+    return(response)
+
+@app.route('/uploadScript', methods=['POST'])
+def uploadScript():
+    f = request.files['script']
+    f.save("script.py")
+    print('script uploaded successfully')
 
     response = make_response(redirect(url_for('index')))
     return(response)
 
 @app.route('/calculate', methods=['POST'])
 def calculate():
+
+    from testSolution import robotAngles
     try:
         x = float(request.form['input_x'])
         y = float(request.form['input_y'])
@@ -56,22 +66,22 @@ def move():
 
         r = Robot()
         r.move(joint - 1,angle)
-        r.close()
+        r.exit()
 
         response = make_response(redirect(url_for('index')))
         return(response)
     except ValueError:
         print('bad input')
 
-@app.route('/script', methods=['GET','POST'])
-def script():
-    code = request.form.get("code")
+# @app.route('/script', methods=['GET','POST'])
+# def script():
+#     code = request.form.get("code")
 
-    f = open("script.py", "w")
-    f.write(code)
-    f.close()
+#     f = open("script.py", "w")
+#     f.write(code)
+#     f.close()
 
-    return render_template('index.html')
+#     return render_template('index.html')
 
 @app.route('/run', methods=['POST'])
 def run():

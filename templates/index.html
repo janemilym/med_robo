@@ -4,71 +4,104 @@
 <head>
     <title>Medical Robotics</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 
 <style>
-    h1,
-    text {
-        font-family: Arial, Helvetica, sans-serif;
+    h1 {
+        text-align: center;
+    }
+
+    div.form {
+        width: 30%;
+        margin: 0 auto;
+    }
+
+    label {
+        text-align: center;
     }
 </style>
 
 <body>
-    <h1>Hello, world!</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file"><br />
-        <br /><input type="submit">
-    </form>
-    <br />
-    <form action="/calculate" method="POST">
-        <text>X:</text><br /><input name="input_x"><br />
-        <text>Y:</text><br /><input name="input_y"><br />
-        <text>Z:</text><br /><input name="input_z"><br />
-        <text>Segment Length:</text><br /><input name="input_l"><br />
+    <h1>Medical Robotics</h1>
+    <div class="form">
+        <form action="/uploadSolution" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="form-row">
+                    <label for="uploadSolution">Inverse Solution</label>
+                </div>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="file" class="form-control-file" name="solution">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Upload Solution</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-        <br /><input type="submit">
-    </form>
-    <br />
-    <form action="/move" method="POST">
-        <text>Joint:</text><br /><input name="joint"><br />
-        <text>Angle:</text><br /><input name="angle"><br />
+    <div class="form">
+        <form action="/calculate" method="POST">
+            <div class="form-group">
+                <div class="form-row">
+                    <label for="coordinates">Enter Coordinates and Segment Length:</label>
+                </div>
+                <div class="form-row">
+                    <input type="text" class="form-control" name="input_x" placeholder="X">
+                    <input type="text" class="form-control" name="input_y" placeholder="Y">
+                    <input type="text" class="form-control" name="input_z" placeholder="Z">
+                </div>
+                <div class="form-row">
+                    <input type="text" class="form-control" name="input_l" placeholder="Segment Length">
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Calculate Angles</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-        <br /><input type="submit">
-    </form>
-    <br />
+    <div class="form">
+        <form action="/move" method="POST">
+            <div class="form-group">
+                <div class="form-row">
+                    <label for="move">Move Robot</label>
+                    <input type="text" class="form-control" name="joint" placeholder="Joint">
+                    <input type="text" class="form-control" name="angle" placeholder="Angle">
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-primary">Move Robot</button>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <form id="script" method="POST">
-        <text>Code here:</text><br />
-        <textarea id="code" rows="20" cols="100"></textarea><br />
-        <br /><input type="submit">
-    </form>
+    <div class="form">
+        <form action="/uploadScript" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="uploadScript">Robot Script</label>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"
-          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-          crossorigin="anonymous"></script>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="file" class="form-control-file" name="script">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Upload Script</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-    <script type="text/javascript">
-        $(document).on('submit','#script',function(e) {
-            console.log('hello');
-            e.preventDefault();
-            $.ajax({
-                type:'POST',
-                url:'/script',
-                data:{
-                    code:$("#code").val()
-                },
-                success:function()
-                {
-                    alert('saved');
-                }
-            })
-        });
-    </script>
-
-    <form action="/run" method="POST">
-        <button name="run" type="submit">Run</button>
-    </form>
-
+    <div class="form">
+        <form action="/run" method="POST" enctype="multipart/form-data">
+            <button type="submit" class="btn btn-primary">Run Script</button>
+        </form>
+    </div>
 </body>
 
 </html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medical Robotics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<style>
+    h1,
+    text {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+</style>
+
+<body>
+    <h1>Hello, world!</h1>
+    <text>Upload Inverse Solution</text>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="solution"><br />
+        <br /><input type="submit">
+    </form>
+    <br />
+    <form action="/calculate" method="POST">
+        <text>X:</text><br /><input name="input_x"><br />
+        <text>Y:</text><br /><input name="input_y"><br />
+        <text>Z:</text><br /><input name="input_z"><br />
+        <text>Segment Length:</text><br /><input name="input_l"><br />
+
+        <br /><input type="submit">
+    </form>
+    <br />
+    <form action="/move" method="POST">
+        <text>Joint:</text><br /><input name="joint"><br />
+        <text>Angle:</text><br /><input name="angle"><br />
+
+        <br /><input type="submit">
+    </form>
+    <br />
+
+    <form id="script" method="POST">
+        <text>Code here:</text><br />
+        <textarea id="code" rows="20" cols="100"></textarea><br />
+        <br /><input type="submit">
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+          crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).on('submit','#script',function(e) {
+            console.log('hello');
+            e.preventDefault();
+            $.ajax({
+                type:'POST',
+                url:'/script',
+                data:{
+                    code:$("#code").val()
+                },
+                success:function()
+                {
+                    alert('saved');
+                }
+            })
+        });
+    </script>
+
+    <form action="/run" method="POST">
+        <button name="run" type="submit">Run</button>
+    </form>
+
+</body>
+
+</html>
