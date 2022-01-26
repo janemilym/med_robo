@@ -47,11 +47,13 @@ def calculate():
         l = float(request.form['input_l'])
 
         angles = robotAngles(x,y,z,l)
-        print(angles)
+        angle1 = angles[0]
+        angle2 = angles[1]
+        angle3 = angles[2]
+        angle4 = angles[3]
         print("success!")
 
-        response = make_response(redirect(url_for('index')))
-        return(response)
+        return render_template('index.html', x=x, y=y, z=z, l=l, angle1 = angle1, angle2 = angle2, angle3 = angle3, angle4 = angle4)
     except ValueError:
         print('input must be number')
 
@@ -66,6 +68,24 @@ def move():
 
         r = Robot()
         r.move(joint - 1,angle)
+        r.exit()
+
+        response = make_response(redirect(url_for('index')))
+        return(response)
+    except ValueError:
+        print('bad input')
+
+@app.route('/moveRel', methods=['POST'])
+def moveRel():
+    try:
+        joint = int(request.form['joint'])
+        angle = float(request.form['angle'])
+
+        print(joint)
+        print(angle)
+
+        r = Robot()
+        r.moveRel(joint - 1,angle)
         r.exit()
 
         response = make_response(redirect(url_for('index')))

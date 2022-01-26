@@ -19,6 +19,12 @@
         margin: 0 auto;
     }
 
+    div.table {
+        width: 30%;
+        margin: 0 auto;
+        padding-top: 10px;
+    }
+
     label {
         text-align: center;
     }
@@ -26,6 +32,8 @@
 
 <body>
     <h1>Medical Robotics</h1>
+
+    <!-- UPLOAD SOLUTION -->
     <div class="form">
         <form action="/uploadSolution" method="POST" enctype="multipart/form-data">
             <div class="form-group">
@@ -44,42 +52,108 @@
         </form>
     </div>
 
+    <!-- CALCULATE ANGLES -->
     <div class="form">
         <form action="/calculate" method="POST">
+            <h4>Calculate Robot Angles</h4> 
             <div class="form-group">
+                <label for="coordinates">Coordinates</label>
                 <div class="form-row">
-                    <label for="coordinates">Enter Coordinates and Segment Length:</label>
+                    <div class="col">
+                        <input type="text" class="form-control" name="input_x" placeholder="X">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="input_y" placeholder="Y">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="input_z" placeholder="Z">
+                    </div>
                 </div>
+                <label for="length">Segment Length</label>
                 <div class="form-row">
-                    <input type="text" class="form-control" name="input_x" placeholder="X">
-                    <input type="text" class="form-control" name="input_y" placeholder="Y">
-                    <input type="text" class="form-control" name="input_z" placeholder="Z">
-                </div>
-                <div class="form-row">
-                    <input type="text" class="form-control" name="input_l" placeholder="Segment Length">
-                </div>
-                <div class="form-row">
-                    <button type="submit" class="btn btn-primary">Calculate Angles</button>
+                    <div class="col">
+                        <input type="text" class="form-control" name="input_l" placeholder="Length">
+                    </div>
                 </div>
             </div>
+            <button type="submit" class="btn btn-primary">Calculate</button>
         </form>
     </div>
+    
+    <div class="table">
+    <dl class="row">
+        <dt class="col-sm-3">Input</dt>
+        <dd class="col-sm-9"> ({{x}}, {{y}}, {{z}}) Length = {{l}}</dd>
+    </dl>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Joint</th>
+                <th scope="col">Angle</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td scope="row">{{ angle1 }}</td>
+            </tr>
+            <tr>
+                <th scope="row">2</th>
+                <td scope="row">{{ angle2 }}</td>
+            </tr>
+            <tr>
+                <th scope="row">3</th>
+                <td scope="row">{{ angle3 }}</td>
+            </tr>
+            <tr>
+                <th scope="row">4</th>
+                <td scope="row">{{ angle4 }}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 
+    <!-- MOVE ROBOT -->
     <div class="form">
         <form action="/move" method="POST">
             <div class="form-group">
+                <label for="move">Move Robot</label>
                 <div class="form-row">
-                    <label for="move">Move Robot</label>
-                    <input type="text" class="form-control" name="joint" placeholder="Joint">
-                    <input type="text" class="form-control" name="angle" placeholder="Angle">
-                </div>
-                <div class="form-row">
-                    <button type="submit" class="btn btn-primary">Move Robot</button>
+                    <div class="col">
+                        <input type="text" class="form-control" name="joint" placeholder="Joint">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="angle" placeholder="Angle">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Move</button>
+                    </div>
                 </div>
             </div>
         </form>
     </div>
 
+    <!-- MOVE ROBOT RELATIVE -->
+    <div class="form">
+        <form action="/moveRel" method="POST">
+            <div class="form-group">
+                <label for="moveRel">Move Robot Relative</label>
+                <div class="form-row">
+                    <div class="col">
+                        <input type="text" class="form-control" name="joint" placeholder="Joint">
+                    </div>
+                    <div class="col">
+                        <input type="text" class="form-control" name="angle" placeholder="Angle">
+                    </div>
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary">Move</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- UPLOAD SCRIPT -->
     <div class="form">
         <form action="/uploadScript" method="POST" enctype="multipart/form-data">
             <div class="form-group">

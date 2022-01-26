@@ -14,6 +14,12 @@ class Robot:
         print(cmd)
         self.robot.write(cmd.encode())
 
+    def moveRel(self, joint: int, degree: float):
+        deg = int(round(degree,1)*10)
+        cmd = '#' + str(joint) + "MD" + str(deg) + '\r'
+        print(cmd)
+        self.robot.write(cmd.encode())
+
     def resetJoint(self, joint: int):
         cmd = '#' + str(joint) + "RESET" + '\r'
         print(cmd)
